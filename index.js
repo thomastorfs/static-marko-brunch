@@ -10,7 +10,7 @@ const mkdirp = require('mkdirp');
 class StaticMarkoCompiler {
   constructor(brunchConfig) {
     // Get the Brunch configuration for marko.
-    this.config = brunchConfig && brunchConfig.plugins && brunchConfig.plugins.marko || {};
+    this.config = brunchConfig && brunchConfig.plugins && brunchConfig.plugins.static_marko || {};
 
     // Complete the config with defaults where necessary.
     this.config = _.defaults(this.config, {
@@ -31,16 +31,13 @@ class StaticMarkoCompiler {
 
   compile(params) {
     return new Promise((resolve, reject) => {
-      let config, publicPath, result, staticResult, error;
+      let config, publicPath, result, error;
 
       // Store the config in a local variable so functions can use it.
       config = this.config;
       publicPath = this.publicPath;
 
       try {
-        // Let marko handle the modified file.
-        require('marko/hot-reload').handleFileModified(params.path);
-
         // Render the template.
         let template;
         template = marko.load(params.path, {writeToDisk: false});
@@ -71,6 +68,9 @@ class StaticMarkoCompiler {
             // Write the resulting html to the destination
             fs.writeFile(outputPath, html);
           }
+
+          // Let marko handle the modified file.
+          require('marko/hot-reload').handleFileModified(params.path);
         });
       }
       catch (_error) {
