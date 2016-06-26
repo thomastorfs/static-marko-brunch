@@ -1,6 +1,6 @@
 {
   "name": "static-marko-brunch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Adds static Marko support to Brunch",
   "author": "Thomas Torfs <thomas.torfs@gmail.com>",
   "license": "MIT",
